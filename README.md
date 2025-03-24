@@ -49,5 +49,5 @@ En hızlı rota (19 dakika): Keçiören -> Gar -> Gar -> Sıhhiye -> Kızılay -
 - Harita veya grafik tabanlı görselleştirme ekleme
 - Kullanıcıdan başlangıç ve hedef istasyonları alarak interaktif bir terminal uygulaması yapma
 
-##Not! 
+## Not! 
 Ek olarak heuristikli bir dosya mevcut büyük networklerde daha hızlı çalışıyor!
