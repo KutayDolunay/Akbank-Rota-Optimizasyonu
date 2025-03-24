@@ -10,10 +10,9 @@ Bu projede aşağıdaki hedeflere ulaşmanız beklenmektedir:
 4. Gerçek dünya problemlerini algoritmik düşünce ile çözme
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
-- **Python** (Ana programlama dili)
-- **collections** (BFS için deque veri yapısı)
-- **heapq** (A* algoritması için öncelik kuyruğu)
-- **typing** (Tip ipuçları için)
+- **Python**
+- **collections** 
+- **heapq** 
 
 ## 🔍 Algoritmaların Çalışma Mantığı
 ### BFS Algoritması (en_az_aktarma_bul)
@@ -30,19 +29,25 @@ A* algoritması, en hızlı rotayı bulmak için kullanılır:
 3. Daha önce bulunan süreden daha kısa bir sürede ulaşılan istasyonlar tekrar değerlendirilir.
 4. Hedef istasyona ulaşıldığında en hızlı rota ve toplam süre döndürülür.
 
-## 🎯 Örnek Kullanım
-```python
-metro = MetroAgi()
-metro.istasyon_ekle("K1", "Kızılay", "Kırmızı Hat")
-metro.istasyon_ekle("K2", "Ulus", "Kırmızı Hat")
-metro.baglanti_ekle("K1", "K2", 4)
+## 🎯 Test Senaryoları
+=== Test Senaryoları ===
 
-rota = metro.en_az_aktarma_bul("K1", "K2")
-print("En az aktarmalı rota:", " -> ".join(i.ad for i in rota))
-```
+1. AŞTİ'den OSB'ye:
+En az aktarmalı rota: AŞTİ -> Kızılay -> Kızılay -> Ulus -> Demetevler -> OSB
+En hızlı rota (25 dakika): AŞTİ -> Kızılay -> Kızılay -> Ulus -> Demetevler -> OSB
+
+2. Batıkent'ten Keçiören'e:
+En az aktarmalı rota: Batıkent -> Demetevler -> Gar -> Keçiören
+En hızlı rota (21 dakika): Batıkent -> Demetevler -> Gar -> Keçiören
+
+3. Keçiören'den AŞTİ'ye:
+En az aktarmalı rota: Keçiören -> Gar -> Gar -> Sıhhiye -> Kızılay -> AŞTİ
+En hızlı rota (19 dakika): Keçiören -> Gar -> Gar -> Sıhhiye -> Kızılay -> AŞTİ
 
 ## 🛠️ Projeyi Geliştirme Fikirleri
 - Daha büyük bir metro ağı ekleyerek simülasyonu genişletme
 - Harita veya grafik tabanlı görselleştirme ekleme
 - Kullanıcıdan başlangıç ve hedef istasyonları alarak interaktif bir terminal uygulaması yapma
 
+##Not! 
+Ek olarak heuristikli bir dosya mevcut büyük networklerde daha hızlı çalışıyor!
