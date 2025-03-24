@@ -1,86 +1,48 @@
-# Metro Ağı Simülasyonu
+# Sürücüsüz Metro Simülasyonu (Rota Optimizasyonu)
 
-Bu proje, bir şehirdeki metro ağını modelleyerek en kısa ve en az aktarmalı rotaları bulmayı sağlayan bir Python uygulamasıdır.
+Bu proje, bir metro ağında iki istasyon arasındaki en hızlı ve en az aktarmalı rotayı bulan bir simülasyon geliştirmek için hazırlanmıştır.
 
-## Özellikler
-- **İstasyon Yönetimi**: Yeni istasyonlar ekleyebilir ve istasyonları belirli hatlara bağlayabilirsiniz.
-- **Bağlantı Yönetimi**: İstasyonlar arasında seyahat süresi bazında bağlantılar oluşturabilirsiniz.
-- **En Az Aktarmalı Rota**: BFS algoritması ile aktarma sayısı en az olan rotayı hesaplar.
-- **En Hızlı Rota**: A* algoritması ile toplam süreyi minimize eden en hızlı rotayı hesaplar.
+## 📌 Proje Amacı
+Bu projede aşağıdaki hedeflere ulaşmanız beklenmektedir:
+1. Graf veri yapısını kullanarak metro ağını modelleme
+2. BFS (Breadth-First Search) algoritması ile en az aktarmalı rotayı bulma
+3. A* algoritması ile en hızlı rotayı bulma
+4. Gerçek dünya problemlerini algoritmik düşünce ile çözme
 
-## Kullanılan Algoritmalar
-- **BFS (Breadth-First Search)**: En az aktarma ile bir istasyondan diğerine ulaşmak için kullanılır.
-- **A* Algoritması**: İstasyonlar arasındaki bağlantı sürelerini dikkate alarak en hızlı rotayı bulur.
+## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
+- **Python** (Ana programlama dili)
+- **collections** (BFS için deque veri yapısı)
+- **heapq** (A* algoritması için öncelik kuyruğu)
+- **typing** (Tip ipuçları için)
 
-## Kurulum
-Bu projeyi çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
+## 🔍 Algoritmaların Çalışma Mantığı
+### BFS Algoritması (en_az_aktarma_bul)
+BFS (Breadth-First Search) algoritması, en az aktarma yapan rotayı bulmak için kullanılır:
+1. Başlangıç istasyonundan itibaren genişlik öncelikli olarak istasyonlar ziyaret edilir.
+2. Kuyruk yapısı (deque) kullanılarak komşu istasyonlar eklenir.
+3. Daha önce ziyaret edilen istasyonlar tekrar ziyaret edilmez.
+4. Hedef istasyona ulaşıldığında, en az aktarma yapılan rota döndürülür.
 
-1. **Depoyu Kopyalayın**
-   ```bash
-   git clone https://github.com/kullaniciadi/metro-agi.git
-   cd metro-agi
-   ```
+### A* Algoritması (en_hizli_rota_bul)
+A* algoritması, en hızlı rotayı bulmak için kullanılır:
+1. Öncelik kuyruğu (heapq) ile her istasyon için en kısa sürede ulaşılabilecek komşular hesaplanır.
+2. Her istasyon için en düşük maliyetli yol saklanır.
+3. Daha önce bulunan süreden daha kısa bir sürede ulaşılan istasyonlar tekrar değerlendirilir.
+4. Hedef istasyona ulaşıldığında en hızlı rota ve toplam süre döndürülür.
 
-2. **Python Gereksinimlerini Karşılayın**
-   Python 3.x yüklü olmalıdır. Eğer sisteminizde Python yoksa [Python'un resmi web sitesinden](https://www.python.org/) yükleyebilirsiniz.
-   
-3. **Dosyayı Çalıştırın**
-   ```bash
-   python metro.py
-   ```
-
-## Kullanım
-
-Örnek bir metro ağı oluşturmak için aşağıdaki adımları takip edebilirsiniz:
-
+## 🎯 Örnek Kullanım
 ```python
-from metro import MetroAgi
-
 metro = MetroAgi()
-
-# İstasyon ekleme
 metro.istasyon_ekle("K1", "Kızılay", "Kırmızı Hat")
 metro.istasyon_ekle("K2", "Ulus", "Kırmızı Hat")
-metro.istasyon_ekle("M1", "AŞTİ", "Mavi Hat")
-metro.istasyon_ekle("M2", "Kızılay", "Mavi Hat")
-
-# Bağlantı ekleme
 metro.baglanti_ekle("K1", "K2", 4)
-metro.baglanti_ekle("M1", "M2", 5)
-metro.baglanti_ekle("K1", "M2", 2)  # Aktarma noktası
 
-# En az aktarmalı rota
-rota = metro.en_az_aktarma_bul("M1", "K2")
+rota = metro.en_az_aktarma_bul("K1", "K2")
 print("En az aktarmalı rota:", " -> ".join(i.ad for i in rota))
-
-# En hızlı rota
-sonuc = metro.en_hizli_rota_bul("M1", "K2")
-if sonuc:
-    rota, sure = sonuc
-    print(f"En hızlı rota ({sure} dakika):", " -> ".join(i.ad for i in rota))
 ```
 
-## Örnek Çıktılar
-```
-=== Test Senaryoları ===
-
-1. AŞTİ'den OSB'ye:
-En az aktarmalı rota: AŞTİ -> Kızılay -> Ulus -> Demetevler -> OSB
-En hızlı rota (15 dakika): AŞTİ -> Kızılay -> Ulus -> Demetevler -> OSB
-
-2. Batıkent'ten Keçiören'e:
-En az aktarmalı rota: Batıkent -> Demetevler -> Gar -> Keçiören
-En hızlı rota (21 dakika): Batıkent -> Demetevler -> Gar -> Keçiören
-```
-
-## Katkıda Bulunma
-Eğer projeye katkıda bulunmak isterseniz:
-1. **Bu repoyu fork edin**
-2. **Yeni bir branch oluşturun**: `git checkout -b yeni-ozellik`
-3. **Değişiklikleri yapın ve commit atın**: `git commit -m 'Yeni özellik eklendi'`
-4. **Push yapın**: `git push origin yeni-ozellik`
-5. **Pull request açın**
-
-## Lisans
-Bu proje MIT lisansı ile sunulmaktadır. Daha fazla bilgi için `LICENSE` dosyasına bakabilirsiniz.
+## 🛠️ Projeyi Geliştirme Fikirleri
+- Daha büyük bir metro ağı ekleyerek simülasyonu genişletme
+- Harita veya grafik tabanlı görselleştirme ekleme
+- Kullanıcıdan başlangıç ve hedef istasyonları alarak interaktif bir terminal uygulaması yapma
 
